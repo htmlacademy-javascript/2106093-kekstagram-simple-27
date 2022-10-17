@@ -47,6 +47,21 @@ console.log('Длина строки выше допустимого? ', isLengt
 
 //Функция для взятия случайного элемента из массива
 const getRandomArrayElement = function(array) {
+  if (!Array.isArray(array)) {
+    console.log('Введеные данные не массив!');
+    return undefined;
+  }
+
+  if (array.length === 0) {
+    console.log('Введеный масив пуст!');
+    return undefined;
+  }
+
+  if (array.length === 1) {
+    console.log('Массив состоит из одного элемента!');
+    return array[0];
+  }
+
   const index = getRandomNumber(0, array.length - 1);
   return array[index];
 };
