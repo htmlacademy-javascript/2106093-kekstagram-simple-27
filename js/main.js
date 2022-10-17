@@ -43,7 +43,7 @@ function isLengthLongCorrect (string, maxStringLength) {
   return string.length >= maxStringLength;
 }
 
-console.log('Длина строки выше допустимого? ', isLengthLongCorrect(10, 20));
+console.log('Длина строки выше допустимого? ', isLengthLongCorrect('Какая то строка! ', 20));
 
 //Функция для взятия случайного элемента из массива
 const getRandomArrayElement = function(array) {
@@ -104,8 +104,8 @@ const generatePhotoArray = function() {
   for (let i = 0; i < QUANTITY_PHOTOS; i++) {
     array.push(createPhoto(i + 1));
   }
-
+  console.log('Вывод первого и последнего эллемента для проверки ', array[0], array[array.length - 1]);
   return array;
 };
 
-console.log(generatePhotoArray());
+generatePhotoArray();
