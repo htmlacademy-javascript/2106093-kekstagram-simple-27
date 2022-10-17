@@ -94,3 +94,18 @@ const createPhoto = function(index) {
     comments: getRandomNumber(COMMENTS_MIN, COMMENTS_MAX),
   };
 };
+
+//Функция для генерации массива с объектами
+const QUANTITY_PHOTOS = 25;
+
+const generatePhotoArray = function() {
+  const array = [];
+
+  for (let i = 0; i < QUANTITY_PHOTOS; i++) {
+    array.push(createPhoto(i + 1));
+  }
+
+  return array;
+};
+
+console.log(generatePhotoArray());
