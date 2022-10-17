@@ -3,11 +3,13 @@ let randomNumber;
 function getRandomNumber(min, max) {
 
   if (typeof min !== 'number' || typeof max !== 'number') {
-    return NaN + console.log('Введен неподходящий тип данных для параметра MIN или МАX!');
+    console.log('Введен неподходящий тип данных для параметра MIN или МАX!');
+    return NaN;
   }
 
   if (!isFinite(min) || !isFinite(max)) {
-    return NaN + console.log('Параметр MIN или MAX не может быть бесконечным числом!');
+    console.log('Параметр MIN или MAX не может быть бесконечным числом!');
+    return NaN;
   }
 
   if (!Number.isInteger(min)) {
@@ -26,7 +28,8 @@ function getRandomNumber(min, max) {
   }
 
   if (min < 0 || max < 1) {
-    return NaN + console.log('Значение не может быть отрицательным или меньше единицы!');
+    console.log('Значения не может быть отрицательным или меньше единицы!');
+    return NaN;
   }
 
   // console.log(`Приняты значения - MIN=${min}, MAX=${max}`);
