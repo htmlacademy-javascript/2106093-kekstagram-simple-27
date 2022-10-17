@@ -83,3 +83,14 @@ const LIKES_MIN = 15;
 const LIKES_MAX = 200;
 const COMMENTS_MIN = 0;
 const COMMENTS_MAX = 200;
+
+//Функция для создания случайного фото обьекта
+const createPhoto = function(index) {
+  return {
+    id: index,
+    url: `/photos/${index}.jpg`,
+    description: getRandomArrayElement(descriptions),
+    likes: getRandomNumber(LIKES_MIN, LIKES_MAX),
+    comments: getRandomNumber(COMMENTS_MIN, COMMENTS_MAX),
+  };
+};
