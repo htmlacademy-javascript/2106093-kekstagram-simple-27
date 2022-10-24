@@ -3,9 +3,11 @@
   "version": "27.0.0",
   "private": true,
   "description": "Личный проект «Кекстаграм (простой)» от HTML Academy",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git@github.com:htmlacademy-javascript/2106093-kekstagram-simple-27.git"
+
   },
   "bugs": {
     "url": "https://github.com/htmlacademy-javascript/2106093-kekstagram-simple-27/issues"
