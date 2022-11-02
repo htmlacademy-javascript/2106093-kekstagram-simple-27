@@ -52,7 +52,7 @@ const createPhoto = function(index) {
 //Функция для генерации массива с объектами
 const QUANTITY_PHOTOS = 25;
 
-const generatePhotoArray = function() {
+const generatePictures = function() {
   const array = [];
 
   for (let i = 0; i < QUANTITY_PHOTOS; i++) {
@@ -62,4 +62,4 @@ const generatePhotoArray = function() {
   return array;
 };
 
-export {generatePhotoArray};
+export {generatePictures};
