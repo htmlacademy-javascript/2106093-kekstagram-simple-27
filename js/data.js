@@ -1,5 +1,5 @@
-import {getRandomNumber} from './random-number.js';
-import {getRandomArrayElement} from './random-array-element.js';
+import {getRandomNumber} from './get-random-number.js';
+import {getRandomArrayElement} from './get-random-array-element.js';
 
 //Объявление переменных
 const DESCRIPTIONS = [
