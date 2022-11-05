@@ -42,7 +42,7 @@ const COMMENTS_MAX = 200;
 const createPhoto = function(index) {
   return {
     id: index,
-    url: `/photos/${index}.jpg`,
+    url: `photos/${index}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomNumber(LIKES.MIN, LIKES.MAX),
     comments: getRandomNumber(COMMENTS_MIN, COMMENTS_MAX),
