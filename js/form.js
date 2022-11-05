@@ -10,7 +10,7 @@ const closeUploadOverlayButton = uploadOverlay.querySelector('.img-upload__cance
 const scaleControl = uploadOverlay.querySelector('.scale__control--value');
 const scaleSmallerButton = uploadOverlay.querySelector('.scale__control--smaller');
 const scaleBiggerButton = uploadOverlay.querySelector('.scale__control--bigger');
-const uploadImage = uploadOverlay.querySelector('.img-upload__preview');
+const uploadImage = uploadOverlay.querySelector('.img-upload__preview').querySelector('img');
 
 // Функция закрытия overlay по клавише ESC
 const onOverlayEscape = (evt) => {
