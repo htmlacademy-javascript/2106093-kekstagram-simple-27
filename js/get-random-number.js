@@ -1,6 +1,5 @@
 // Функция, возвращающая случайное целое число из переданного диапазона включительно
 function getRandomNumber(min, max) {
-  let randomNumber;
   if (typeof min !== 'number' || typeof max !== 'number') {
     console.log('Введен неподходящий тип данных для параметра MIN или МАX!');
     return NaN;
@@ -31,8 +30,7 @@ function getRandomNumber(min, max) {
     return NaN;
   }
 
-  randomNumber = Math.floor(min + Math.random() * (max + 1 - min));
-  return randomNumber;
+  return Math.floor(min + Math.random() * (max + 1 - min));
 }
 
 export {getRandomNumber};

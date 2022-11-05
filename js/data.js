@@ -1,5 +1,5 @@
-import {getRandomNumber} from './random-number.js';
-import {getRandomArrayElement} from './random-array-element.js';
+import {getRandomNumber} from './get-random-number.js';
+import {getRandomArrayElement} from './get-random-array-element.js';
 
 //Объявление переменных
 const DESCRIPTIONS = [
@@ -52,7 +52,7 @@ const createPhoto = function(index) {
 //Функция для генерации массива с объектами
 const QUANTITY_PHOTOS = 25;
 
-const generatePhotoArray = function() {
+const generatePictures = function() {
   const array = [];
 
   for (let i = 0; i < QUANTITY_PHOTOS; i++) {
@@ -62,4 +62,4 @@ const generatePhotoArray = function() {
   return array;
 };
 
-export {generatePhotoArray};
+export {generatePictures};
