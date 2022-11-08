@@ -1,24 +1,42 @@
-import { form, imageDescription, closeOverlay } from './form.js';
+import { form, imageDescription, closeOverlay, closeUploadOverlayButton, onEscapeOverlay, isEscapeKey } from './form.js';
 
 // ---- валидация формы ----
 const validation = function () {
   // Переменные шаблонов сообщений при загрузке фото
   const error = document.querySelector('#error').content.querySelector('.error');
   const success = document.querySelector('#success').content.querySelector('.success');
-
-  // Функция добавления окна ошибки на страницу
-  const showError = () => {
-    document.body.append(error);
-  };
+  const errorButton = error.querySelector('.error__button');
+  const successButton = success.querySelector('.success__button');
 
   // Функция удаления окна ошибки
   const removeError = () => {
     document.querySelector('.error').remove();
   };
 
-  // Функция добавления окна успешной загрузки на страницу
-  const showSuccess = () => {
-    document.body.append(success);
+  // Функция закрытия окна ошибки по кнопке
+  // ВОПРОС
+  // ВОПРОС
+  // ВОПРОС ПРО РЕФАКТОРИНГ, дважды используем похожий код, различие в функции
+  const onEscapeError = (evt) => {
+    if (isEscapeKey(evt.key)) {
+      evt.preventDefault();
+      removeError();
+      document.addEventListener('keydown', onEscapeOverlay);
+      document.removeEventListener('keydown', onEscapeError);
+    }
+  };
+
+  // Функция добавления окна ошибки на страницу
+  const showError = () => {
+    document.body.append(error);
+    // ВОПРОС
+    // ВОПРОС
+    // ВОПРОС  ПРО ФОКУС НА КНОПКЕ
+    errorButton.focus({focusVisible: true});
+
+    closeUploadOverlayButton.addEventListener('click', closeOverlay);
+    document.removeEventListener('keydown', onEscapeOverlay);
+    document.addEventListener('keydown', onEscapeError);
   };
 
   // Функция удаления окна успешной загрузки
@@ -27,9 +45,32 @@ const validation = function () {
     closeOverlay();
   };
 
+  // Функция закрытия окна успеха по кнопке
+  const onEscapeSuccess = (evt) => {
+    if (isEscapeKey(evt.key)) {
+      evt.preventDefault();
+      removeSuccess();
+      document.addEventListener('keydown', onEscapeOverlay);
+      document.removeEventListener('keydown', onEscapeSuccess);
+    }
+  };
+
+  // Функция добавления окна успешной загрузки на страницу
+  const showSuccess = () => {
+    document.body.append(success);
+
+    // ВОПРОС
+    // ВОПРОС
+    // ВОПРОС ПРО ФОКУС НА КНОПКЕ
+    successButton.focus({focusVisible: true});
+
+    document.removeEventListener('keydown', onEscapeOverlay);
+    document.addEventListener('keydown', onEscapeSuccess);
+  };
+
   //Добавление обработчиков на кнопки окон ошибки и успеха
-  error.querySelector('.error__button').addEventListener('click', removeError);
-  success.querySelector('.success__button').addEventListener('click', removeSuccess);
+  errorButton.addEventListener('click', removeError);
+  successButton.addEventListener('click', removeSuccess);
 
   let flag = false;
   imageDescription.addEventListener('blur', () => {

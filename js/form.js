@@ -26,7 +26,7 @@ const imageDescription = form.querySelector('.text__description');
 // Функция закрытия overlay по клавише ESC
 const isEscapeKey = (evtKey) => evtKey === 'Escape';
 
-const onEscape = (evt) => {
+const onEscapeOverlay = (evt) => {
   if (isEscapeKey(evt.key)) {
     evt.preventDefault();
     closeOverlay();
@@ -38,7 +38,7 @@ function openOverlay () {
   uploadOverlay.classList.remove('hidden');
 
   // Вызов обработчика для закрытия overlay по клавише
-  document.addEventListener('keydown', onEscape);
+  document.addEventListener('keydown', onEscapeOverlay);
 }
 
 // Функция сброса формы до стандартных настроек
@@ -46,7 +46,7 @@ const resetForm = function () {
   uploadImage.className = ''; // Сбросс фильтров
   radioButtons.forEach((element) => element.removeAttribute('checked')); // Удалине выбранных фильтров
   form.querySelector('input[id="effect-none"]').setAttribute('checked', true); // Возврат фильтра none
-  imageDescription.textContent = ''; // Сброс текста комментария
+  imageDescription.value = ''; // Сброс текста комментария
   uploadImage.style.transform = 'scale(1)'; // Сброс до 100% масштабирования изображения
   scaleControl.value = '100%';
 };
@@ -56,17 +56,13 @@ function closeOverlay () {
   uploadOverlay.classList.add('hidden');
 
   // Удаление обработчика для закрытия overlay по клавише
-  document.removeEventListener('keydown', onEscape);
-
+  document.removeEventListener('keydown', onEscapeOverlay);
   // Установка параметров по умолчанию.
   resetForm();
 }
 
 //Обработчик для открытия overlay по кнопке
-upload.addEventListener('click', (evt) => { // Пока поставим клик для работы, изменим на change после
-  evt.preventDefault(); // Убираем стандартное свойство
-  openOverlay ();
-});
+upload.addEventListener('change', () => openOverlay ());
 
 // Обработчик для закрытия overlay по кнопке
 closeUploadOverlayButton.addEventListener('click', closeOverlay);
@@ -118,15 +114,17 @@ const EffectNames = getEffectsNames();
 
 // Функция присваивания класса изображению
 const applyEffect = (evt) => {
-  // Сброс предыдущих фильтров
-  uploadImage.className = '';
-  radioButtons.forEach((element) => element.removeAttribute('checked'));
-  // Установка настроек выбранного фильтра
-  uploadImage.classList.add(EffectNames[evt.target.value]);
-  evt.target.setAttribute('checked', true);
+  if (evt.target.type === 'radio') {
+    // Сброс предыдущих фильтров
+    uploadImage.className = '';
+    radioButtons.forEach((element) => element.removeAttribute('checked'));
+    // Установка настроек выбранного фильтра
+    uploadImage.classList.add(EffectNames[evt.target.value]);
+    evt.target.setAttribute('checked', true);
+  }
 };
 
 // Обработчик клика по фильтру
 document.querySelector('.effects__list').addEventListener('click', applyEffect);
 
-export {form, imageDescription, closeOverlay};
+export {form, imageDescription, closeOverlay, closeUploadOverlayButton, openOverlay, onEscapeOverlay, isEscapeKey};
