@@ -46,9 +46,8 @@ const resetForm = function () {
   uploadImage.className = ''; // Сбросс фильтров
   radioButtons.forEach((element) => element.removeAttribute('checked')); // Удалине выбранных фильтров
   form.querySelector('input[id="effect-none"]').setAttribute('checked', true); // Возврат фильтра none
-  imageDescription.value = ''; // Сброс текста комментария
   uploadImage.style.transform = 'scale(1)'; // Сброс до 100% масштабирования изображения
-  scaleControl.value = '100%';
+  form.reset();
 };
 
 // Функция закрытия overlay
