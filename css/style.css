@@ -1408,3 +1408,8 @@ main {
 .hidden {
   display: none;
 }
+
+.text-help {
+  color: red;
+  font-weight: bold;
+}

@@ -1,5 +1,5 @@
 import './display-picture.js';
 import './form.js';
-import {validation} from './validation.js';
+import {validate} from './validation.js';
 
-validation();
+validate();

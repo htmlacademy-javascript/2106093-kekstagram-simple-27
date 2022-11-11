@@ -1,7 +1,7 @@
 import { form, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey } from './form.js';
 
 // ---- валидация формы ----
-const validation = function () {
+const validate = function () {
   // Переменные шаблонов сообщений при загрузке фото
   const error = document.querySelector('#error').content.querySelector('.error');
   const success = document.querySelector('#success').content.querySelector('.success');
@@ -62,6 +62,7 @@ const validation = function () {
   errorButton.addEventListener('click', removeError);
   successButton.addEventListener('click', removeSuccess);
 
+  // Код pristine validate
   const pristine = new Pristine(form, {
     classTo: 'img-upload__text',
     errorTextParent: 'img-upload__text',
@@ -79,4 +80,4 @@ const validation = function () {
   });
 };
 
-export {validation};
+export {validate};
