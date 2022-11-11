@@ -39,7 +39,7 @@ function openModal () {
   uploadModal.classList.remove('hidden');
 
   // Вызов обработчика для закрытия Modal по клавише
-  document.addEventListener('keydown', onEscapeModal);
+  document.addEventListener('keydown', onModalKeydown);
   document.addEventListener('click', clickOutModal);
 }
 
@@ -48,7 +48,7 @@ function clickOutModal (evt) {
   if (evt.target === overlay) {
     closeModal();
   }
-};
+}
 
 // Функция сброса формы до стандартных настроек
 const resetForm = function () {

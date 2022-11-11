@@ -1,4 +1,4 @@
-import { form, imageDescription, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey } from './form.js';
+import { form, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey } from './form.js';
 
 // ---- валидация формы ----
 const validation = function () {
@@ -62,27 +62,19 @@ const validation = function () {
   errorButton.addEventListener('click', removeError);
   successButton.addEventListener('click', removeSuccess);
 
-  let flag = false;
-  imageDescription.addEventListener('blur', () => {
-    const descriptionRange = {
-      MIN: 20,
-      MAX: 140
-    };
-
-    const valueLength = imageDescription.value.length;
-    if (valueLength < descriptionRange.MIN || valueLength > descriptionRange.MAX) {
-      flag = false;
-    } else {
-      flag = true;
-    }
+  const pristine = new Pristine(form, {
+    classTo: 'img-upload__text',
+    errorTextParent: 'img-upload__text',
   });
 
-  form.querySelector('.img-upload__submit').addEventListener('click', () => {
-    if (flag === false) {
-      showError();
-    } else {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
       showSuccess();
       form.submit();
+    } else {
+      showError();
     }
   });
 };
