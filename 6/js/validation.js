@@ -1,7 +1,7 @@
-import { form, imageDescription, closeOverlay, closeUploadOverlayButton, onEscapeOverlay, isEscapeKey } from './form.js';
+import { form, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey } from './form.js';
 
 // ---- валидация формы ----
-const validation = function () {
+const validate = function () {
   // Переменные шаблонов сообщений при загрузке фото
   const error = document.querySelector('#error').content.querySelector('.error');
   const success = document.querySelector('#success').content.querySelector('.success');
@@ -14,44 +14,39 @@ const validation = function () {
   };
 
   // Функция закрытия окна ошибки по кнопке
-  // ВОПРОС
-  // ВОПРОС
-  // ВОПРОС ПРО РЕФАКТОРИНГ, дважды используем похожий код, различие в функции
-  const onEscapeError = (evt) => {
+  const onErrorKeydown = (evt) => {
     if (isEscapeKey(evt.key)) {
       evt.preventDefault();
       removeError();
-      document.addEventListener('keydown', onEscapeOverlay);
-      document.removeEventListener('keydown', onEscapeError);
+      document.addEventListener('keydown', onModalKeydown);
+      document.removeEventListener('keydown', onErrorKeydown);
     }
   };
 
   // Функция добавления окна ошибки на страницу
   const showError = () => {
     document.body.append(error);
-    // ВОПРОС
-    // ВОПРОС
-    // ВОПРОС  ПРО ФОКУС НА КНОПКЕ
-    errorButton.focus({focusVisible: true});
 
-    closeUploadOverlayButton.addEventListener('click', closeOverlay);
-    document.removeEventListener('keydown', onEscapeOverlay);
-    document.addEventListener('keydown', onEscapeError);
+    error.focus();
+
+    closeUploadModalButton.addEventListener('click', closeModal);
+    document.removeEventListener('keydown', onModalKeydown);
+    document.addEventListener('keydown', onErrorKeydown);
   };
 
   // Функция удаления окна успешной загрузки
   const removeSuccess = () => {
     document.querySelector('.success').remove();
-    closeOverlay();
+    closeModal();
   };
 
   // Функция закрытия окна успеха по кнопке
-  const onEscapeSuccess = (evt) => {
+  const onSuccessKeydown = (evt) => {
     if (isEscapeKey(evt.key)) {
       evt.preventDefault();
       removeSuccess();
-      document.addEventListener('keydown', onEscapeOverlay);
-      document.removeEventListener('keydown', onEscapeSuccess);
+      document.addEventListener('keydown', onModalKeydown);
+      document.removeEventListener('keydown', onSuccessKeydown);
     }
   };
 
@@ -59,42 +54,30 @@ const validation = function () {
   const showSuccess = () => {
     document.body.append(success);
 
-    // ВОПРОС
-    // ВОПРОС
-    // ВОПРОС ПРО ФОКУС НА КНОПКЕ
-    successButton.focus({focusVisible: true});
-
-    document.removeEventListener('keydown', onEscapeOverlay);
-    document.addEventListener('keydown', onEscapeSuccess);
+    document.removeEventListener('keydown', onModalKeydown);
+    document.addEventListener('keydown', onSuccessKeydown);
   };
 
   //Добавление обработчиков на кнопки окон ошибки и успеха
   errorButton.addEventListener('click', removeError);
   successButton.addEventListener('click', removeSuccess);
 
-  let flag = false;
-  imageDescription.addEventListener('blur', () => {
-    const descriptionRange = {
-      MIN: 20,
-      MAX: 140
-    };
-
-    const valueLength = imageDescription.value.length;
-    if (valueLength < descriptionRange.MIN || valueLength > descriptionRange.MAX) {
-      flag = false;
-    } else {
-      flag = true;
-    }
+  // Код pristine validate
+  const pristine = new Pristine(form, {
+    classTo: 'img-upload__text',
+    errorTextParent: 'img-upload__text',
   });
 
-  form.querySelector('.img-upload__submit').addEventListener('click', () => {
-    if (flag === false) {
-      showError();
-    } else {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
       showSuccess();
       form.submit();
+    } else {
+      showError();
     }
   });
 };
 
-export {validation};
+export {validate};

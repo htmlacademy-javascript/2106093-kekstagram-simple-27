@@ -30,12 +30,12 @@ const DESCRIPTIONS = [
   'Конец'
 ];
 
-const likes = {
+const Likes = {
   MIN: 15,
   MAX: 200,
 };
 
-const comments = {
+const Comments = {
   MIN: 0,
   MAX: 200,
 };
@@ -46,8 +46,8 @@ const createPhoto = function(index) {
     id: index,
     url: `photos/${index}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomNumber(likes.MIN, likes.MAX),
-    comments: getRandomNumber(comments.MIN, comments.MAX),
+    likes: getRandomNumber(Likes.MIN, Likes.MAX),
+    comments: getRandomNumber(Comments.MIN, Comments.MAX),
   };
 };
 
