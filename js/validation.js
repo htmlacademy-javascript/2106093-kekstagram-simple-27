@@ -1,4 +1,4 @@
-import { form, imageDescription, closeOverlay, closeUploadOverlayButton, onEscapeOverlay, isEscapeKey } from './form.js';
+import { form, imageDescription, closeOverlay, closeUploadModalButton, onEscapeOverlay, isEscapeKey } from './form.js';
 
 // ---- валидация формы ----
 const validation = function () {
@@ -34,7 +34,7 @@ const validation = function () {
     // ВОПРОС  ПРО ФОКУС НА КНОПКЕ
     errorButton.focus({focusVisible: true});
 
-    closeUploadOverlayButton.addEventListener('click', closeOverlay);
+    closeUploadModalButton.addEventListener('click', closeOverlay);
     document.removeEventListener('keydown', onEscapeOverlay);
     document.addEventListener('keydown', onEscapeError);
   };

@@ -9,14 +9,15 @@ const Scales = {
 // Переменные для модального окна
 const form = document.querySelector('.img-upload__form'); // Форма
 const upload = form.querySelector('#upload-file'); // Инпут загрузки файла или в JS открытия overlay
-const uploadOverlay = form.querySelector('.img-upload__overlay'); // Overlay
-const closeUploadOverlayButton = uploadOverlay.querySelector('.img-upload__cancel'); // Кнопка закрытия overlay
+const uploadModal = form.querySelector('.img-upload__overlay'); // Overlay
+const closeUploadModalButton = uploadModal.querySelector('.img-upload__cancel'); // Кнопка закрытия overlay
+const
 
 // Переменные масштабирования изображения
-const scaleControl = uploadOverlay.querySelector('.scale__control--value'); // Поле отображения значения масштаба
-const scaleSmallerButton = uploadOverlay.querySelector('.scale__control--smaller'); // Кнопка уменьшения масштаба изображения
-const scaleBiggerButton = uploadOverlay.querySelector('.scale__control--bigger'); // Кнопка увеличения масштаба изображения
-const uploadImage = uploadOverlay.querySelector('.img-upload__preview').querySelector('img'); // Изображение
+const scaleControl = uploadModal.querySelector('.scale__control--value'); // Поле отображения значения масштаба
+const scaleSmallerButton = uploadModal.querySelector('.scale__control--smaller'); // Кнопка уменьшения масштаба изображения
+const scaleBiggerButton = uploadModal.querySelector('.scale__control--bigger'); // Кнопка увеличения масштаба изображения
+const uploadImage = uploadModal.querySelector('.img-upload__preview').querySelector('img'); // Изображение
 
 // Переменные фильтов и комметария
 const radioButtons = form.querySelectorAll('input[name="effect"]');
@@ -35,7 +36,7 @@ const onEscapeOverlay = (evt) => {
 
 // Функция открытия overlay
 function openOverlay () {
-  uploadOverlay.classList.remove('hidden');
+  uploadModal.classList.remove('hidden');
 
   // Вызов обработчика для закрытия overlay по клавише
   document.addEventListener('keydown', onEscapeOverlay);
@@ -52,7 +53,7 @@ const resetForm = function () {
 
 // Функция закрытия overlay
 function closeOverlay () {
-  uploadOverlay.classList.add('hidden');
+  uploadModal.classList.add('hidden');
 
   // Удаление обработчика для закрытия overlay по клавише
   document.removeEventListener('keydown', onEscapeOverlay);
@@ -64,7 +65,7 @@ function closeOverlay () {
 upload.addEventListener('change', () => openOverlay ());
 
 // Обработчик для закрытия overlay по кнопке
-closeUploadOverlayButton.addEventListener('click', closeOverlay);
+closeUploadModalButton.addEventListener('click', closeOverlay);
 
 // ---- Масштабирование картинки по клику ----
 // Функция получения и преобразование значения из input
@@ -126,4 +127,4 @@ const applyEffect = (evt) => {
 // Обработчик клика по фильтру
 document.querySelector('.effects__list').addEventListener('click', applyEffect);
 
-export {form, imageDescription, closeOverlay, closeUploadOverlayButton, openOverlay, onEscapeOverlay, isEscapeKey};
+export {form, imageDescription, closeOverlay, closeUploadModalButton, openOverlay, onEscapeOverlay, isEscapeKey};
