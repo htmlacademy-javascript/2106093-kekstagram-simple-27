@@ -1,5 +1,5 @@
 //Обьявление констант масштабирования
-const scales = {
+const Scales = {
   MIN: 25,
   MAX: 100,
   STEP: 25,
@@ -79,14 +79,14 @@ const getInputValue = () => {
 
 // Функция уменьшения масштаба по кнопке
 const onScaleDecrease = function () {
-  const value = Math.max(getInputValue() - scales.STEP, scales.MIN);
+  const value = Math.max(getInputValue() - Scales.STEP, Scales.MIN);
   scaleControl.value = `${value}%`;
   uploadImage.style.transform = `scale(${value / 100})`;
 };
 
 // Функция увеличения масштаба по кнопке
 const onScaleIncrease = function () {
-  const value = Math.min(getInputValue() + scales.STEP, scales.MAX);
+  const value = Math.min(getInputValue() + Scales.STEP, Scales.MAX);
   scaleControl.value = `${value}%`;
   uploadImage.style.transform = `scale(${value / 100})`;
 };
@@ -98,15 +98,15 @@ scaleBiggerButton.addEventListener('click', onScaleIncrease);
 // ---- Накладывание фильтра на картинку по клику ---- //
 // Функция присваивания имен эффектов
 const getEffectsNames = function () {
-  const RadioEffects = {}; // Саздаем обьект эффектов
+  const radioEffects = {}; // Саздаем обьект эффектов
   // Функция создания обькта с именами эффектов и классами
   function createNames (value) {
-    RadioEffects[value] = `effects__preview--${value}`;
+    radioEffects[value] = `effects__preview--${value}`;
   }
 
   // Получение имен всех имен ээфектов фильтра
   radioButtons.forEach((effectName) => createNames(effectName.value));
-  return RadioEffects;
+  return radioEffects;
 };
 
 // Создаем обьект с именами и классами
