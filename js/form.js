@@ -8,10 +8,10 @@ const Scales = {
 // ---- Переменные ----
 // Переменные для модального окна
 const form = document.querySelector('.img-upload__form'); // Форма
-const upload = form.querySelector('#upload-file'); // Инпут загрузки файла или в JS открытия overlay
-const uploadModal = form.querySelector('.img-upload__overlay'); // Overlay
-const closeUploadModalButton = uploadModal.querySelector('.img-upload__cancel'); // Кнопка закрытия overlay
-const
+const upload = form.querySelector('#upload-file'); // Инпут загрузки файла или в JS открытия modal
+const uploadModal = form.querySelector('.img-upload__overlay'); // Modal
+const closeUploadModalButton = uploadModal.querySelector('.img-upload__cancel'); // Кнопка закрытия Modal
+const overlay = form.querySelector('.img-upload__overlay');
 
 // Переменные масштабирования изображения
 const scaleControl = uploadModal.querySelector('.scale__control--value'); // Поле отображения значения масштаба
@@ -24,23 +24,31 @@ const radioButtons = form.querySelectorAll('input[name="effect"]');
 const imageDescription = form.querySelector('.text__description');
 
 // ---- Открытие и закрытие модального окна формы
-// Функция закрытия overlay по клавише ESC
+// Функция закрытия Modal по клавише ESC
 const isEscapeKey = (evtKey) => evtKey === 'Escape';
 
-const onEscapeOverlay = (evt) => {
+const onEscapeModal = (evt) => {
   if (isEscapeKey(evt.key)) {
     evt.preventDefault();
-    closeOverlay();
+    closeModal();
   }
 };
 
-// Функция открытия overlay
-function openOverlay () {
+// Функция открытия Modal
+function openModal () {
   uploadModal.classList.remove('hidden');
 
-  // Вызов обработчика для закрытия overlay по клавише
-  document.addEventListener('keydown', onEscapeOverlay);
+  // Вызов обработчика для закрытия Modal по клавише
+  document.addEventListener('keydown', onEscapeModal);
+  document.addEventListener('click', clickOutModal);
 }
+
+// Функция закрытия модалки по клику вне модалки
+function clickOutModal (evt) {
+  if (evt.target === overlay) {
+    closeModal();
+  }
+};
 
 // Функция сброса формы до стандартных настроек
 const resetForm = function () {
@@ -51,21 +59,21 @@ const resetForm = function () {
   form.reset();
 };
 
-// Функция закрытия overlay
-function closeOverlay () {
+// Функция закрытия Modal
+function closeModal () {
   uploadModal.classList.add('hidden');
 
-  // Удаление обработчика для закрытия overlay по клавише
-  document.removeEventListener('keydown', onEscapeOverlay);
+  // Удаление обработчика для закрытия Modal по клавише
+  document.removeEventListener('keydown', onEscapeModal);
   // Установка параметров по умолчанию.
   resetForm();
 }
 
-//Обработчик для открытия overlay по кнопке
-upload.addEventListener('change', () => openOverlay ());
+//Обработчик для открытия Modal по кнопке
+upload.addEventListener('change', () => openModal ());
 
-// Обработчик для закрытия overlay по кнопке
-closeUploadModalButton.addEventListener('click', closeOverlay);
+// Обработчик для закрытия Modal по кнопке
+closeUploadModalButton.addEventListener('click', closeModal);
 
 // ---- Масштабирование картинки по клику ----
 // Функция получения и преобразование значения из input
@@ -127,4 +135,4 @@ const applyEffect = (evt) => {
 // Обработчик клика по фильтру
 document.querySelector('.effects__list').addEventListener('click', applyEffect);
 
-export {form, imageDescription, closeOverlay, closeUploadModalButton, openOverlay, onEscapeOverlay, isEscapeKey};
+export {form, imageDescription, closeModal, closeUploadModalButton, onEscapeModal, isEscapeKey};

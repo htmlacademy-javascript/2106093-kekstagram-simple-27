@@ -1,4 +1,4 @@
-import { form, imageDescription, closeOverlay, closeUploadModalButton, onEscapeOverlay, isEscapeKey } from './form.js';
+import { form, imageDescription, closeModal, closeUploadModalButton, onEscapeModal, isEscapeKey } from './form.js';
 
 // ---- валидация формы ----
 const validation = function () {
@@ -21,7 +21,7 @@ const validation = function () {
     if (isEscapeKey(evt.key)) {
       evt.preventDefault();
       removeError();
-      document.addEventListener('keydown', onEscapeOverlay);
+      document.addEventListener('keydown', onEscapeModal);
       document.removeEventListener('keydown', onEscapeError);
     }
   };
@@ -34,15 +34,15 @@ const validation = function () {
     // ВОПРОС  ПРО ФОКУС НА КНОПКЕ
     errorButton.focus({focusVisible: true});
 
-    closeUploadModalButton.addEventListener('click', closeOverlay);
-    document.removeEventListener('keydown', onEscapeOverlay);
+    closeUploadModalButton.addEventListener('click', closeModal);
+    document.removeEventListener('keydown', onEscapeModal);
     document.addEventListener('keydown', onEscapeError);
   };
 
   // Функция удаления окна успешной загрузки
   const removeSuccess = () => {
     document.querySelector('.success').remove();
-    closeOverlay();
+    closeModal();
   };
 
   // Функция закрытия окна успеха по кнопке
@@ -50,7 +50,7 @@ const validation = function () {
     if (isEscapeKey(evt.key)) {
       evt.preventDefault();
       removeSuccess();
-      document.addEventListener('keydown', onEscapeOverlay);
+      document.addEventListener('keydown', onEscapeModal);
       document.removeEventListener('keydown', onEscapeSuccess);
     }
   };
@@ -64,7 +64,7 @@ const validation = function () {
     // ВОПРОС ПРО ФОКУС НА КНОПКЕ
     successButton.focus({focusVisible: true});
 
-    document.removeEventListener('keydown', onEscapeOverlay);
+    document.removeEventListener('keydown', onEscapeModal);
     document.addEventListener('keydown', onEscapeSuccess);
   };
 
