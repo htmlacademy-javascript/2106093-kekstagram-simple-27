@@ -15,8 +15,8 @@ const overlay = form.querySelector('.img-upload__overlay');
 
 // Переменные масштабирования изображения
 const scaleControl = uploadModal.querySelector('.scale__control--value'); // Поле отображения значения масштаба
-const scaleSmallerButton = uploadModal.querySelector('.scale__control--smaller'); // Кнопка уменьшения масштаба изображения
-const scaleBiggerButton = uploadModal.querySelector('.scale__control--bigger'); // Кнопка увеличения масштаба изображения
+const scaleDecreaseButton = uploadModal.querySelector('.scale__control--smaller'); // Кнопка уменьшения масштаба изображения
+const scaleIncreaseButton = uploadModal.querySelector('.scale__control--bigger'); // Кнопка увеличения масштаба изображения
 const uploadImage = uploadModal.querySelector('.img-upload__preview').querySelector('img'); // Изображение
 
 // Переменные фильтов и комметария
@@ -27,7 +27,7 @@ const imageDescription = form.querySelector('.text__description');
 // Функция закрытия Modal по клавише ESC
 const isEscapeKey = (evtKey) => evtKey === 'Escape';
 
-const onEscapeModal = (evt) => {
+const onModalKeydown = (evt) => {
   if (isEscapeKey(evt.key)) {
     evt.preventDefault();
     closeModal();
@@ -53,8 +53,7 @@ function clickOutModal (evt) {
 // Функция сброса формы до стандартных настроек
 const resetForm = function () {
   uploadImage.className = ''; // Сбросс фильтров
-  radioButtons.forEach((element) => element.removeAttribute('checked')); // Удалине выбранных фильтров
-  form.querySelector('input[id="effect-none"]').setAttribute('checked', true); // Возврат фильтра none
+  form.querySelector('input[id="effect-none"]').checked = true; // Возврат фильтра none
   uploadImage.style.transform = 'scale(1)'; // Сброс до 100% масштабирования изображения
   form.reset();
 };
@@ -64,7 +63,7 @@ function closeModal () {
   uploadModal.classList.add('hidden');
 
   // Удаление обработчика для закрытия Modal по клавише
-  document.removeEventListener('keydown', onEscapeModal);
+  document.removeEventListener('keydown', onModalKeydown);
   // Установка параметров по умолчанию.
   resetForm();
 }
@@ -100,8 +99,8 @@ const onScaleIncrease = function () {
 };
 
 // Вызываем обработчики на кнопки масштабирования
-scaleSmallerButton.addEventListener('click', onScaleDecrease);
-scaleBiggerButton.addEventListener('click', onScaleIncrease);
+scaleDecreaseButton.addEventListener('click', onScaleDecrease);
+scaleIncreaseButton.addEventListener('click', onScaleIncrease);
 
 // ---- Накладывание фильтра на картинку по клику ---- //
 // Функция присваивания имен эффектов
@@ -125,14 +124,13 @@ const applyEffect = (evt) => {
   if (evt.target.type === 'radio') {
     // Сброс предыдущих фильтров
     uploadImage.className = '';
-    radioButtons.forEach((element) => element.removeAttribute('checked'));
     // Установка настроек выбранного фильтра
     uploadImage.classList.add(EffectNames[evt.target.value]);
-    evt.target.setAttribute('checked', true);
+    evt.target.checked = true;
   }
 };
 
 // Обработчик клика по фильтру
 document.querySelector('.effects__list').addEventListener('click', applyEffect);
 
-export {form, imageDescription, closeModal, closeUploadModalButton, onEscapeModal, isEscapeKey};
+export {form, imageDescription, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey};

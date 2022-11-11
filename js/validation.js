@@ -1,4 +1,4 @@
-import { form, imageDescription, closeModal, closeUploadModalButton, onEscapeModal, isEscapeKey } from './form.js';
+import { form, imageDescription, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey } from './form.js';
 
 // ---- валидация формы ----
 const validation = function () {
@@ -14,29 +14,24 @@ const validation = function () {
   };
 
   // Функция закрытия окна ошибки по кнопке
-  // ВОПРОС
-  // ВОПРОС
-  // ВОПРОС ПРО РЕФАКТОРИНГ, дважды используем похожий код, различие в функции
-  const onEscapeError = (evt) => {
+  const onErrorKeydown = (evt) => {
     if (isEscapeKey(evt.key)) {
       evt.preventDefault();
       removeError();
-      document.addEventListener('keydown', onEscapeModal);
-      document.removeEventListener('keydown', onEscapeError);
+      document.addEventListener('keydown', onModalKeydown);
+      document.removeEventListener('keydown', onErrorKeydown);
     }
   };
 
   // Функция добавления окна ошибки на страницу
   const showError = () => {
     document.body.append(error);
-    // ВОПРОС
-    // ВОПРОС
-    // ВОПРОС  ПРО ФОКУС НА КНОПКЕ
-    errorButton.focus({focusVisible: true});
+
+    error.focus();
 
     closeUploadModalButton.addEventListener('click', closeModal);
-    document.removeEventListener('keydown', onEscapeModal);
-    document.addEventListener('keydown', onEscapeError);
+    document.removeEventListener('keydown', onModalKeydown);
+    document.addEventListener('keydown', onErrorKeydown);
   };
 
   // Функция удаления окна успешной загрузки
@@ -46,12 +41,12 @@ const validation = function () {
   };
 
   // Функция закрытия окна успеха по кнопке
-  const onEscapeSuccess = (evt) => {
+  const onSuccessKeydown = (evt) => {
     if (isEscapeKey(evt.key)) {
       evt.preventDefault();
       removeSuccess();
-      document.addEventListener('keydown', onEscapeModal);
-      document.removeEventListener('keydown', onEscapeSuccess);
+      document.addEventListener('keydown', onModalKeydown);
+      document.removeEventListener('keydown', onSuccessKeydown);
     }
   };
 
@@ -59,13 +54,8 @@ const validation = function () {
   const showSuccess = () => {
     document.body.append(success);
 
-    // ВОПРОС
-    // ВОПРОС
-    // ВОПРОС ПРО ФОКУС НА КНОПКЕ
-    successButton.focus({focusVisible: true});
-
-    document.removeEventListener('keydown', onEscapeModal);
-    document.addEventListener('keydown', onEscapeSuccess);
+    document.removeEventListener('keydown', onModalKeydown);
+    document.addEventListener('keydown', onSuccessKeydown);
   };
 
   //Добавление обработчиков на кнопки окон ошибки и успеха
