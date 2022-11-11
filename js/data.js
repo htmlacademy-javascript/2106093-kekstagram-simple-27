@@ -30,22 +30,24 @@ const DESCRIPTIONS = [
   'Конец'
 ];
 
-const LIKES = {
+const Likes = {
   MIN: 15,
   MAX: 200,
 };
 
-const COMMENTS_MIN = 0;
-const COMMENTS_MAX = 200;
+const Comments = {
+  MIN: 0,
+  MAX: 200,
+};
 
 //Функция для создания случайного фото обьекта
 const createPhoto = function(index) {
   return {
     id: index,
-    url: `/photos/${index}.jpg`,
+    url: `photos/${index}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomNumber(LIKES.MIN, LIKES.MAX),
-    comments: getRandomNumber(COMMENTS_MIN, COMMENTS_MAX),
+    likes: getRandomNumber(Likes.MIN, Likes.MAX),
+    comments: getRandomNumber(Comments.MIN, Comments.MAX),
   };
 };
 
