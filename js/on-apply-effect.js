@@ -76,13 +76,8 @@ noUiSlider.create(slider, {
 
 const resetEffect = () => {
   uploadImage.className = '';
-  // ВОПРОС
-  // ВОПРОС
-  // ВОПРОС
-  // Не удаляется атрибут style и не перезаписывается при переключении с последнего фильтра на фильтр none
-  uploadImage.style.transform = ''; // Не срабатывает
-  scaleControl.style.filter = ''; // Не срабатывает
-  uploadImage.removeAttribute('style'); // Не срабатывает
+  uploadImage.style.transform = '';
+  uploadImage.style.filter = '';
   scaleControl.value = `${Scale.MAX}%`;
   scaleValue = Scale.MAX;
 };
@@ -91,17 +86,13 @@ resetEffect();
 
 const applyEffect = (evt) => {
   if (evt.target.classList.contains('effects__radio')) {
-    resetEffect();
-    // ВОПРОС
-    // ВОПРОС
-    // При нажатии выводилось в консоль сначала значение undefined, а потом нормальное, пришлось добавить условие. Что это может быть?
-    if (typeof evt.target.value !== 'undefined') {
 
+    if (typeof evt.target.value !== 'undefined') {
+      resetEffect();
       uploadImage.classList.add(`effects__preview--${Effects[evt.target.value].NAME}`);
       if (Effects[evt.target.value].NAME === 'none') {
         console.log(Effects[evt.target.value].NAME);
         sliderContainer.classList.add('hidden');
-        resetEffect();
       } else {
         sliderContainer.classList.remove('hidden');
       }
