@@ -1,7 +1,7 @@
 import {uploadImage} from './form.js';
 
 //Обьявление констант масштабирования
-const Scales = {
+const Scale = {
   MIN: 25,
   MAX: 100,
   STEP: 25,
@@ -14,8 +14,8 @@ const scaleIncreaseButton = document.querySelector('.scale__control--bigger'); /
 
 // ---- Масштабирование картинки по клику ----
 // Функция получения и преобразование значения из input
-const getInputValue = () => {
-  const value = Number.parseInt(scaleControl.value, 10);
+const getInputValue = (input) => {
+  const value = Number.parseInt(input.value, 10);
   if (Number.isNaN(value)) {
     return 0;
   }
@@ -24,14 +24,14 @@ const getInputValue = () => {
 
 // Функция уменьшения масштаба по кнопке
 const onScaleDecrease = function () {
-  const value = Math.max(getInputValue() - Scales.STEP, Scales.MIN);
+  const value = Math.max(getInputValue(scaleControl) - Scale.STEP, Scale.MIN);
   scaleControl.value = `${value}%`;
   uploadImage.style.transform = `scale(${value / 100})`;
 };
 
 // Функция увеличения масштаба по кнопке
 const onScaleIncrease = function () {
-  const value = Math.min(getInputValue() + Scales.STEP, Scales.MAX);
+  const value = Math.min(getInputValue(scaleControl) + Scale.STEP, Scale.MAX);
   scaleControl.value = `${value}%`;
   uploadImage.style.transform = `scale(${value / 100})`;
 };
@@ -39,3 +39,5 @@ const onScaleIncrease = function () {
 // Вызываем обработчики на кнопки масштабирования
 scaleDecreaseButton.addEventListener('click', onScaleDecrease);
 scaleIncreaseButton.addEventListener('click', onScaleIncrease);
+
+export {Scale, scaleControl, getInputValue};
