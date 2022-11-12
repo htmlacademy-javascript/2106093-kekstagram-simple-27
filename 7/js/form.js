@@ -12,7 +12,7 @@ const uploadModal = form.querySelector('.img-upload__overlay'); // Modal
 const closeUploadModalButton = uploadModal.querySelector('.img-upload__cancel'); // Кнопка закрытия Modal
 const overlay = form.querySelector('.img-upload__overlay'); // Overlay
 const uploadImage = document.querySelector('.img-upload__preview').querySelector('img'); // Изображение
-const sliderContainer = form.querySelector('.effect-level');
+const getSliderContainer = () => form.querySelector('.effect-level');
 
 // Переменные комметария
 const imageDescription = form.querySelector('.text__description');
@@ -69,4 +69,4 @@ upload.addEventListener('change', () => openModal ());
 // Обработчик для закрытия Modal по кнопке
 closeUploadModalButton.addEventListener('click', closeModal);
 
-export {form, imageDescription, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey, uploadImage, sliderContainer};
+export {form, imageDescription, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey, uploadImage, getSliderContainer};
