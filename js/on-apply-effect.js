@@ -82,6 +82,11 @@ const resetEffect = () => {
   scaleValue = Scale.MAX;
 };
 
+slider.noUiSlider.on('update', () => {
+  sliderValue.value = slider.noUiSlider.get();
+  uploadImage.style.filter = `${Effects.none.FILTER}(${slider.noUiSlider.get()}${Effects.none.UNIT})`;
+});
+
 resetEffect();
 
 const applyEffect = (evt) => {
@@ -96,11 +101,6 @@ const applyEffect = (evt) => {
       } else {
         sliderContainer.classList.remove('hidden');
       }
-
-      slider.noUiSlider.on('update', () => {
-        sliderValue.value = slider.noUiSlider.get();
-        uploadImage.style.filter = `${Effects[evt.target.value].FILTER}(${slider.noUiSlider.get()}${Effects[evt.target.value].UNIT})`;
-      });
 
       slider.noUiSlider.updateOptions({
         range: {
