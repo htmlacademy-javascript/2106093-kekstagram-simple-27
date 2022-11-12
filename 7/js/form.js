@@ -2,7 +2,7 @@
 // ВОПРОС
 // ВОПРОС
 // В консоли ошибка GET http://localhost:3000/js/on-apply-effect net::ERR_ABORTED 404 (Not Found) при импорте...
-// import { resetEffect } from './on-apply-effect';
+import { resetEffect } from './on-apply-effect.js';
 
 // ---- Переменные ----
 // Переменные для модального окна
@@ -31,10 +31,7 @@ const onModalKeydown = (evt) => {
 // Функция открытия Modal
 function openModal () {
   uploadModal.classList.remove('hidden');
-  // ВОПРОС
-  // ВОПРОС
-  // ВОПРОС смотри наверху
-  // resetEffect();
+  resetEffect();
   // Вызов обработчика для закрытия Modal по клавише
   document.addEventListener('keydown', onModalKeydown);
   document.addEventListener('click', clickOutModal);
@@ -63,10 +60,7 @@ function closeModal () {
   document.removeEventListener('keydown', onModalKeydown);
   // Установка параметров по умолчанию.
   resetForm();
-  // ВОПРОС
-  // ВОПРОС
-  // ВОПРОС смотри наверху
-  // resetEffect();
+  resetEffect();
 }
 
 //Обработчик для открытия Modal по кнопке
