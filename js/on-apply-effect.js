@@ -1,9 +1,9 @@
-import {sliderContainer, uploadImage} from './form.js';
+import {getSliderContainer, uploadImage} from './form.js';
 import {Scale, scaleControl, getInputValue} from './image-scale.js';
 
 //Перечисление переменных слайдера эффектов
-const slider = sliderContainer.querySelector('.effect-level__slider');
-const sliderValue = sliderContainer.querySelector('.effect-level__value');
+const slider = getSliderContainer().querySelector('.effect-level__slider');
+const sliderValue = getSliderContainer().querySelector('.effect-level__value');
 let scaleValue = getInputValue(scaleControl);
 
 const Effects = {
@@ -86,9 +86,9 @@ resetEffect();
 
 const applyEffect = (evt) => {
   if (evt.target.classList.contains('effects__radio')) {
+    resetEffect();
 
     if (typeof evt.target.value !== 'undefined') {
-      resetEffect();
       uploadImage.classList.add(`effects__preview--${Effects[evt.target.value].NAME}`);
       if (Effects[evt.target.value].NAME === 'none') {
         console.log(Effects[evt.target.value].NAME);
