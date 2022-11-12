@@ -1,9 +1,9 @@
-import {getSliderContainer, uploadImage} from './form.js';
+import {sliderContainer, uploadImage} from './form.js';
 import {Scale, scaleControl, getInputValue} from './image-scale.js';
 
 //Перечисление переменных слайдера эффектов
-const slider = getSliderContainer().querySelector('.effect-level__slider');
-const sliderValue = getSliderContainer().querySelector('.effect-level__value');
+const slider = sliderContainer.querySelector('.effect-level__slider');
+const sliderValue = sliderContainer.querySelector('.effect-level__value');
 let scaleValue = getInputValue(scaleControl);
 
 const Effects = {
