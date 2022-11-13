@@ -6,6 +6,7 @@ const slider = sliderContainer.querySelector('.effect-level__slider');
 const sliderValue = sliderContainer.querySelector('.effect-level__value');
 let scaleValue = getInputValue(scaleControl);
 
+
 const Effects = {
   none: {
     NAME: 'none',
@@ -63,15 +64,18 @@ const Effects = {
   },
 };
 
+let currentEffect = Effects.none;
+console.log(currentEffect.MIN);
+
 // Создаем слайдер с эффектами по умолчанию
 noUiSlider.create(slider, {
   connect: 'lower',
   range: {
-    min: Effects.none.MIN,
-    max: Effects.none.MAX,
+    min: currentEffect.MIN,
+    max: currentEffect.MAX,
   },
-  start: Effects.none.START,
-  step: Effects.none.STEP,
+  start: currentEffect.START,
+  step: currentEffect.STEP,
 });
 
 const resetEffect = () => {
@@ -84,19 +88,18 @@ const resetEffect = () => {
 
 slider.noUiSlider.on('update', () => {
   sliderValue.value = slider.noUiSlider.get();
-  uploadImage.style.filter = `${Effects.none.FILTER}(${slider.noUiSlider.get()}${Effects.none.UNIT})`;
+  uploadImage.style.filter = `${currentEffect.FILTER}(${slider.noUiSlider.get()}${currentEffect.UNIT})`;
 });
-
-resetEffect();
 
 const applyEffect = (evt) => {
   if (evt.target.classList.contains('effects__radio')) {
     resetEffect();
 
+    currentEffect = Effects[evt.target.value];
+
     if (typeof evt.target.value !== 'undefined') {
-      uploadImage.classList.add(`effects__preview--${Effects[evt.target.value].NAME}`);
-      if (Effects[evt.target.value].NAME === 'none') {
-        console.log(Effects[evt.target.value].NAME);
+      uploadImage.classList.add(`effects__preview--${currentEffect.NAME}`);
+      if (currentEffect.NAME === 'none') {
         sliderContainer.classList.add('hidden');
       } else {
         sliderContainer.classList.remove('hidden');
@@ -104,11 +107,11 @@ const applyEffect = (evt) => {
 
       slider.noUiSlider.updateOptions({
         range: {
-          min: Effects[evt.target.value].MIN,
-          max: Effects[evt.target.value].MAX,
+          min: currentEffect.MIN,
+          max: currentEffect.MAX,
         },
-        start: Effects[evt.target.value].START,
-        step: Effects[evt.target.value].STEP,
+        start: currentEffect.START,
+        step: currentEffect.STEP,
       });
     }
   }

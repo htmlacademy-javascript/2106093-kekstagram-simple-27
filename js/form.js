@@ -1,8 +1,8 @@
 // ВОПРОС
 // ВОПРОС
 // ВОПРОС
-// В консоли ошибка GET http://localhost:3000/js/on-apply-effect net::ERR_ABORTED 404 (Not Found) при импорте...
-// import { resetEffect } from './on-apply-effect.js';
+
+import { resetEffect } from './on-apply-effect.js';
 
 // ---- Переменные ----
 // Переменные для модального окна
@@ -31,7 +31,7 @@ const onModalKeydown = (evt) => {
 // Функция открытия Modal
 function openModal () {
   uploadModal.classList.remove('hidden');
-  // resetEffect();
+  resetEffect();
   // Вызов обработчика для закрытия Modal по клавише
   document.addEventListener('keydown', onModalKeydown);
   document.addEventListener('click', clickOutModal);
