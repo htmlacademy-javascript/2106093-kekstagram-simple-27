@@ -1,9 +1,4 @@
-//Обьявление констант масштабирования
-const Scales = {
-  MIN: 25,
-  MAX: 100,
-  STEP: 25,
-};
+import { resetImageEffect, sliderContainer } from './on-apply-effect.js';
 
 // ---- Переменные ----
 // Переменные для модального окна
@@ -11,16 +6,10 @@ const form = document.querySelector('.img-upload__form'); // Форма
 const upload = form.querySelector('#upload-file'); // Инпут загрузки файла или в JS открытия modal
 const uploadModal = form.querySelector('.img-upload__overlay'); // Modal
 const closeUploadModalButton = uploadModal.querySelector('.img-upload__cancel'); // Кнопка закрытия Modal
-const overlay = form.querySelector('.img-upload__overlay');
+const overlay = form.querySelector('.img-upload__overlay'); // Overlay
+const uploadImage = document.querySelector('.img-upload__preview').querySelector('img'); // Изображение
 
-// Переменные масштабирования изображения
-const scaleControl = uploadModal.querySelector('.scale__control--value'); // Поле отображения значения масштаба
-const scaleDecreaseButton = uploadModal.querySelector('.scale__control--smaller'); // Кнопка уменьшения масштаба изображения
-const scaleIncreaseButton = uploadModal.querySelector('.scale__control--bigger'); // Кнопка увеличения масштаба изображения
-const uploadImage = uploadModal.querySelector('.img-upload__preview').querySelector('img'); // Изображение
-
-// Переменные фильтов и комметария
-const radioButtons = form.querySelectorAll('input[name="effect"]');
+// Переменные комметария
 const imageDescription = form.querySelector('.text__description');
 
 // ---- Открытие и закрытие модального окна формы
@@ -36,8 +25,9 @@ const onModalKeydown = (evt) => {
 
 // Функция открытия Modal
 function openModal () {
+  sliderContainer.classList.add('hidden');
   uploadModal.classList.remove('hidden');
-
+  resetImageEffect();
   // Вызов обработчика для закрытия Modal по клавише
   document.addEventListener('keydown', onModalKeydown);
   document.addEventListener('click', clickOutModal);
@@ -66,6 +56,7 @@ function closeModal () {
   document.removeEventListener('keydown', onModalKeydown);
   // Установка параметров по умолчанию.
   resetForm();
+  resetImageEffect();
 }
 
 //Обработчик для открытия Modal по кнопке
@@ -74,63 +65,4 @@ upload.addEventListener('change', () => openModal ());
 // Обработчик для закрытия Modal по кнопке
 closeUploadModalButton.addEventListener('click', closeModal);
 
-// ---- Масштабирование картинки по клику ----
-// Функция получения и преобразование значения из input
-const getInputValue = () => {
-  const value = Number.parseInt(scaleControl.value, 10);
-  if (Number.isNaN(value)) {
-    return 0;
-  }
-  return value;
-};
-
-// Функция уменьшения масштаба по кнопке
-const onScaleDecrease = function () {
-  const value = Math.max(getInputValue() - Scales.STEP, Scales.MIN);
-  scaleControl.value = `${value}%`;
-  uploadImage.style.transform = `scale(${value / 100})`;
-};
-
-// Функция увеличения масштаба по кнопке
-const onScaleIncrease = function () {
-  const value = Math.min(getInputValue() + Scales.STEP, Scales.MAX);
-  scaleControl.value = `${value}%`;
-  uploadImage.style.transform = `scale(${value / 100})`;
-};
-
-// Вызываем обработчики на кнопки масштабирования
-scaleDecreaseButton.addEventListener('click', onScaleDecrease);
-scaleIncreaseButton.addEventListener('click', onScaleIncrease);
-
-// ---- Накладывание фильтра на картинку по клику ---- //
-// Функция присваивания имен эффектов
-const getEffectsNames = function () {
-  const radioEffects = {}; // Саздаем обьект эффектов
-  // Функция создания обькта с именами эффектов и классами
-  function createNames (value) {
-    radioEffects[value] = `effects__preview--${value}`;
-  }
-
-  // Получение имен всех имен ээфектов фильтра
-  radioButtons.forEach((effectName) => createNames(effectName.value));
-  return radioEffects;
-};
-
-// Создаем обьект с именами и классами
-const EffectNames = getEffectsNames();
-
-// Функция присваивания класса изображению
-const applyEffect = (evt) => {
-  if (evt.target.type === 'radio') {
-    // Сброс предыдущих фильтров
-    uploadImage.className = '';
-    // Установка настроек выбранного фильтра
-    uploadImage.classList.add(EffectNames[evt.target.value]);
-    evt.target.checked = true;
-  }
-};
-
-// Обработчик клика по фильтру
-document.querySelector('.effects__list').addEventListener('click', applyEffect);
-
-export {form, imageDescription, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey};
+export {form, imageDescription, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey, uploadImage};

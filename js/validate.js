@@ -26,9 +26,6 @@ const validate = function () {
   // Функция добавления окна ошибки на страницу
   const showError = () => {
     document.body.append(error);
-
-    error.focus();
-
     closeUploadModalButton.addEventListener('click', closeModal);
     document.removeEventListener('keydown', onModalKeydown);
     document.addEventListener('keydown', onErrorKeydown);
@@ -59,7 +56,7 @@ const validate = function () {
   };
 
   //Добавление обработчиков на кнопки окон ошибки и успеха
-  errorButton.addEventListener('click', removeError);
+  errorButton.addEventListener('click', () => {removeError(); document.addEventListener('keydown', onModalKeydown); } );
   successButton.addEventListener('click', removeSuccess);
 
   // Код pristine validate
