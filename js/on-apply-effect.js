@@ -1,11 +1,10 @@
-import {sliderContainer, uploadImage} from './form.js';
-import {Scale, scaleControl, getInputValue} from './image-scale.js';
+import {resetScale , scaleControl, Scale} from './image-scale.js';
 
 //Перечисление переменных слайдера эффектов
-const slider = sliderContainer.querySelector('.effect-level__slider');
-const sliderValue = sliderContainer.querySelector('.effect-level__value');
-let scaleValue = getInputValue(scaleControl);
-
+const sliderContainer = document.querySelector('.img-upload__form').querySelector('.effect-level');
+const slider = sliderContainer.querySelector('.effect-level__slider'); //sliderContainer.
+const sliderValue = sliderContainer.querySelector('.effect-level__value');//sliderContainer.
+const image = document.querySelector('.img-upload__preview').querySelector('img'); // Изображение
 
 const Effects = {
   none: {
@@ -65,7 +64,6 @@ const Effects = {
 };
 
 let currentEffect = Effects.none;
-console.log(currentEffect.MIN);
 
 // Создаем слайдер с эффектами по умолчанию
 noUiSlider.create(slider, {
@@ -78,45 +76,52 @@ noUiSlider.create(slider, {
   step: currentEffect.STEP,
 });
 
-const resetEffect = () => {
-  uploadImage.className = '';
-  uploadImage.style.transform = '';
-  uploadImage.style.filter = '';
-  scaleControl.value = `${Scale.MAX}%`;
-  scaleValue = Scale.MAX;
+
+const resetImageStyle = (img) => {
+  img.className = '';
+  img.style.transform = '';
+  img.style.filter = '';
+};
+
+const resetImageEffect = () => {
+  resetImageStyle(image);
+  resetScale(scaleControl, Scale.MAX);
 };
 
 slider.noUiSlider.on('update', () => {
   sliderValue.value = slider.noUiSlider.get();
-  uploadImage.style.filter = `${currentEffect.FILTER}(${slider.noUiSlider.get()}${currentEffect.UNIT})`;
+  image.style.filter = `${currentEffect.FILTER}(${slider.noUiSlider.get()}${currentEffect.UNIT})`;
 });
 
 const applyEffect = (evt) => {
   if (evt.target.classList.contains('effects__radio')) {
-    resetEffect();
+    resetImageEffect();
 
     currentEffect = Effects[evt.target.value];
 
-    if (typeof evt.target.value !== 'undefined') {
-      uploadImage.classList.add(`effects__preview--${currentEffect.NAME}`);
-      if (currentEffect.NAME === 'none') {
-        sliderContainer.classList.add('hidden');
-      } else {
-        sliderContainer.classList.remove('hidden');
-      }
-
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: currentEffect.MIN,
-          max: currentEffect.MAX,
-        },
-        start: currentEffect.START,
-        step: currentEffect.STEP,
-      });
+    if (typeof evt.target.value === 'undefined') {
+      return;
     }
+
+    image.classList.add(`effects__preview--${currentEffect.NAME}`);
+
+    if (currentEffect.NAME === 'none') {
+      sliderContainer.classList.add('hidden');
+    } else {
+      sliderContainer.classList.remove('hidden');
+    }
+
+    slider.noUiSlider.updateOptions({
+      range: {
+        min: currentEffect.MIN,
+        max: currentEffect.MAX,
+      },
+      start: currentEffect.START,
+      step: currentEffect.STEP,
+    });
   }
 };
 
 document.querySelector('.effects__list').addEventListener('click', applyEffect);
 
-export {resetEffect};
+export {resetImageEffect, sliderContainer};
