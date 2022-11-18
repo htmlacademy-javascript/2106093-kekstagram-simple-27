@@ -60,7 +60,7 @@ const generatePictures = function() {
   for (let i = 0; i < QUANTITY_PHOTOS; i++) {
     array.push(createPhoto(i + 1));
   }
-  // console.log('Вывод первого и последнего эллемента для проверки ', array[0], array[array.length - 1]);
+
   return array;
 };
 

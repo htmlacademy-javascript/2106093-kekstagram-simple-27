@@ -1,23 +1,20 @@
-// import {generatePictures} from './data.js'; // Импортируем функцию создания массива обьектов картинок
-// const pictures = generatePictures(); // Генерируем картинки
-
 const displayRenderPictures = (picturesData) => {
 
-  const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture'); //Находим шаблон для картинок
-  const picturesFragment = document.createDocumentFragment(); // Создаем фрагмент для картинок
+  const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+  const picturesFragment = document.createDocumentFragment();
 
   picturesData.forEach(({url, description, likes, comments}) => {
-    const pictureElement = pictureTemplate.cloneNode(true); // Делаем копию шаблона
+    const pictureElement = pictureTemplate.cloneNode(true);
 
-    pictureElement.querySelector('.picture__img').src = url; // Подставляем путь к картинке
-    pictureElement.querySelector('.picture__img').alt = description; // Подставляем описание картинка alt
-    pictureElement.querySelector('.picture__comments').textContent = comments; // Подставляем количество коментариев
-    pictureElement.querySelector('.picture__likes').textContent = likes; // Подставляем количество лайков
+    pictureElement.querySelector('.picture__img').src = url;
+    pictureElement.querySelector('.picture__img').alt = description;
+    pictureElement.querySelector('.picture__comments').textContent = comments;
+    pictureElement.querySelector('.picture__likes').textContent = likes;
 
-    picturesFragment.append(pictureElement); // Вставляем копию шаблона в разметку
+    picturesFragment.append(pictureElement);
   });
 
-  document.querySelector('.container').append(picturesFragment); //Вставляем элементы из фрагмента в код
+  document.querySelector('.container').append(picturesFragment);
 
 };
 

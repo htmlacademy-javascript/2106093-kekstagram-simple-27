@@ -5,6 +5,5 @@ import './form.js';
 import './image-scale.js';
 import './on-apply-effect.js';
 
-
 validate();
 getData(displayRenderPictures);

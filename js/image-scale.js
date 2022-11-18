@@ -6,10 +6,10 @@ const Scale = {
 };
 
 // Переменные масштабирования изображения
-const scaleControl = document.querySelector('.scale__control--value'); // Поле отображения значения масштаба
-const scaleDecreaseButton = document.querySelector('.scale__control--smaller'); // Кнопка уменьшения масштаба изображения
-const scaleIncreaseButton = document.querySelector('.scale__control--bigger'); // Кнопка увеличения масштаба изображения
-const uploadImage = document.querySelector('.img-upload__preview').querySelector('img'); // Изображение
+const scaleControl = document.querySelector('.scale__control--value');
+const scaleDecreaseButton = document.querySelector('.scale__control--smaller');
+const scaleIncreaseButton = document.querySelector('.scale__control--bigger');
+const uploadImage = document.querySelector('.img-upload__preview').querySelector('img');
 let currentScaleValue = getInputValue(scaleControl);
 
 // ---- Масштабирование картинки по клику ----
