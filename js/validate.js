@@ -1,12 +1,14 @@
 import { form, closeModal, closeUploadModalButton, onModalKeydown, isEscapeKey } from './form.js';
+import { sendData } from './api.js';
 
-// ---- валидация формы ----
+// ---- Валидация формы ----
 const validate = function () {
   // Переменные шаблонов сообщений при загрузке фото
   const error = document.querySelector('#error').content.querySelector('.error');
   const success = document.querySelector('#success').content.querySelector('.success');
   const errorButton = error.querySelector('.error__button');
   const successButton = success.querySelector('.success__button');
+  const submitButton = form.querySelector('#upload-submit');
 
   // Функция удаления окна ошибки
   const removeError = () => {
@@ -59,6 +61,16 @@ const validate = function () {
   errorButton.addEventListener('click', () => {removeError(); document.addEventListener('keydown', onModalKeydown); } );
   successButton.addEventListener('click', removeSuccess);
 
+  const blockSubmitButton = () => {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Отправка изображения...';
+  };
+
+  const unblockSubmitButton = () => {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Опубликовать';
+  };
+
   // Код pristine validate
   const pristine = new Pristine(form, {
     classTo: 'img-upload__text',
@@ -68,11 +80,23 @@ const validate = function () {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
+
     if (isValid) {
-      showSuccess();
-      form.submit();
-    } else {
-      showError();
+      blockSubmitButton();
+
+      sendData(
+        () => {
+          showSuccess();
+          unblockSubmitButton();
+        },
+
+        () => {
+          showError();
+          unblockSubmitButton();
+        },
+
+        new FormData(evt.target)
+      );
     }
   });
 };
