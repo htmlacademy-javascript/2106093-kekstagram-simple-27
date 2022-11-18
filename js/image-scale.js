@@ -10,7 +10,6 @@ const scaleControl = document.querySelector('.scale__control--value');
 const scaleDecreaseButton = document.querySelector('.scale__control--smaller');
 const scaleIncreaseButton = document.querySelector('.scale__control--bigger');
 const uploadImage = document.querySelector('.img-upload__preview').querySelector('img');
-let currentScaleValue = getInputValue(scaleControl);
 
 // ---- Масштабирование картинки по клику ----
 // Функция получения и преобразование значения из input
@@ -25,7 +24,6 @@ function getInputValue (input) {
 
 const resetScale = function (input, defaultValue) {
   input.value = `${defaultValue}%`;
-  currentScaleValue = defaultValue;
 };
 
 // Функция уменьшения масштаба по кнопке
