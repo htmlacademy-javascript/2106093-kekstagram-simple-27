@@ -17,9 +17,10 @@ let currentScaleValue = getInputValue(scaleControl);
 function getInputValue (input) {
   const value = Number.parseInt(input.value, 10);
   if (Number.isNaN(value)) {
-    return 0;
+    throw new Error('Значение не является числом');
+  } else {
+    return value;
   }
-  return value;
 }
 
 const resetScale = function (input, defaultValue) {
@@ -41,14 +42,6 @@ const onScaleIncrease = function () {
   scaleControl.value = `${newValue}%`;
   uploadImage.style.transform = `scale(${newValue / 100})`;
 };
-
-// // ВОПРОС ВОПРОС ВОПРОС ВОПРОС ВОПРОС ВОПРОС ВОПРОС Почему так не работает???
-// const onScaleIncrease = function (img) {
-//   const newValue = Math.min(getInputValue(scaleControl) + Scale.STEP, Scale.MAX);
-//   scaleControl.value = `${newValue}%`;
-//   img.style.transform = `scale(${newValue / 100})`;
-// };
-// scaleIncreaseButton.addEventListener('click', onScaleIncrease(uploadImage));
 
 // Вызываем обработчики на кнопки масштабирования
 scaleDecreaseButton.addEventListener('click', onScaleDecrease);

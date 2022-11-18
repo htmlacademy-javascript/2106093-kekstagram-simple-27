@@ -2,12 +2,12 @@ import { resetImageEffect, sliderContainer } from './on-apply-effect.js';
 
 // ---- Переменные ----
 // Переменные для модального окна
-const form = document.querySelector('.img-upload__form'); // Форма
-const upload = form.querySelector('#upload-file'); // Инпут загрузки файла или в JS открытия modal
-const uploadModal = form.querySelector('.img-upload__overlay'); // Modal
-const closeUploadModalButton = uploadModal.querySelector('.img-upload__cancel'); // Кнопка закрытия Modal
-const overlay = form.querySelector('.img-upload__overlay'); // Overlay
-const uploadImage = document.querySelector('.img-upload__preview').querySelector('img'); // Изображение
+const form = document.querySelector('.img-upload__form');
+const upload = form.querySelector('#upload-file');
+const uploadModal = form.querySelector('.img-upload__overlay');
+const closeUploadModalButton = uploadModal.querySelector('.img-upload__cancel');
+const overlay = form.querySelector('.img-upload__overlay');
+const uploadImage = document.querySelector('.img-upload__preview').querySelector('img');
 
 // Переменные комметария
 const imageDescription = form.querySelector('.text__description');
@@ -23,11 +23,16 @@ const onModalKeydown = (evt) => {
   }
 };
 
+const loadImage = () => {
+  uploadImage.src = URL.createObjectURL(upload.files[0]);
+};
+
 // Функция открытия Modal
 function openModal () {
   sliderContainer.classList.add('hidden');
   uploadModal.classList.remove('hidden');
   resetImageEffect();
+  loadImage();
   // Вызов обработчика для закрытия Modal по клавише
   document.addEventListener('keydown', onModalKeydown);
   document.addEventListener('click', clickOutModal);
@@ -42,9 +47,9 @@ function clickOutModal (evt) {
 
 // Функция сброса формы до стандартных настроек
 const resetForm = function () {
-  uploadImage.className = ''; // Сбросс фильтров
-  form.querySelector('input[id="effect-none"]').checked = true; // Возврат фильтра none
-  uploadImage.style.transform = 'scale(1)'; // Сброс до 100% масштабирования изображения
+  uploadImage.className = '';
+  form.querySelector('input[id="effect-none"]').checked = true;
+  uploadImage.style.transform = 'scale(1)';
   form.reset();
 };
 
